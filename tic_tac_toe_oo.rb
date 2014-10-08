@@ -62,17 +62,20 @@ class Game
     winning_positons = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
     winning_positons.each do |position|
       if board.squares[position[0]] == 'X' && board.squares[position[1]] == 'X' && board.squares[position[2]] == 'X'
-        self.winner = player.name
+        return @winner = player.name
       elsif board.squares[position[0]] == 'O' && board.squares[position[1]] == 'O' && board.squares[position[2]] == 'O'
-        self.winner = computer.name
+        return @winner = computer.name
       end
     end
+    return @winner = nil
   end
   
   def run
     board.draw
     begin
       player.pick_result(board)
+      board.draw
+      break if check_winner(board)
       computer.pick_result(board)
       board.draw
       check_winner(board)
